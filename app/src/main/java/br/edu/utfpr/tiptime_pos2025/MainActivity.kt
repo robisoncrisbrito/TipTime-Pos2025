@@ -14,9 +14,12 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate( layoutInflater )
         setContentView( binding.root )
 
-
         binding.calculateButton.setOnClickListener {
             calculateTip()
+        }
+
+        if ( savedInstanceState != null ) {
+            binding.tipResult.text = savedInstanceState.getString( "result" )
         }
     }
 
@@ -43,5 +46,10 @@ class MainActivity : AppCompatActivity() {
         val formattedTip = NumberFormat.getCurrencyInstance().format( tip )
 
         binding.tipResult.text = getString( R.string.tip_amount_s, formattedTip )
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putString( "result", binding.tipResult.text.toString() )
     }
 }
